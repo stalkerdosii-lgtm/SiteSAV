@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Корзина{% endblock %}
+
+{% block content %}
+    <h2>Корзина</h2>
+
+    {% if cart.items.all %}
+        <table>
+            <tr>
+                <th>Товар</th>
+                <th>Цена</th>
+                <th>Кол-во</th>
+                <th>Сумма</th>
+                <th></th>
+            </tr>
+            {% for item in cart.items.all %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.product.price }} ₽</td>
+                    <td>
+                        <form action="{% url 'cart:cart_update' item.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="0" style="width:60px;">
+                            <button type="submit">↻</button>
+                        </form>
+                    </td>
+                    <td>{{ item.get_total_price }} ₽</td>
+                    <td>
+                        <form action="{% url 'cart:cart_remove' item.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit">✕</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <p><b>Итого: {{ cart.get_total_price }} ₽</b></p>
+        <p>Всего товаров: {{ cart.get_total_count }}</p>
+    {% else %}
+        <p>Корзина пуста</p>
+    {% endif %}
+
+    <a href="{% url 'catalog:product_list' %}">← В каталог</a>
+{% endblock %}

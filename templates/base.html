@@ -6,7 +6,20 @@
 </head>
 <body>
     <header>
-        <h1><a href="{% url 'catalog:product_list' %}">Универсальная база</a></h1>
+    <h1><a href="{% url 'home' %}">Универсальная база</a></h1>
+        <nav>
+            <a href="{% url 'catalog:product_list' %}">Каталог</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'cart:cart_detail' %}">Корзина</a>
+                <span>Привет, {{ user.username }}!</span>
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Выйти</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a>
+            {% endif %}
+        </nav>
     </header>
     <main>
         {% block content %}{% endblock %}
