@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Профиль{% endblock %}
+
+{% block content %}
+    <h2>Профиль</h2>
+
+    <p><b>Имя пользователя:</b> {{ user.username }}</p>
+    <p><b>Email:</b> {{ user.email|default:"—" }}</p>
+    <p><b>Телефон:</b> {{ user.phone|default:"—" }}</p>
+    <p><b>Адрес:</b> {{ user.address|default:"—" }}</p>
+
+    <p>
+        <a href="{% url 'users:profile_edit' %}">Редактировать</a> |
+        <a href="{% url 'cart:cart_detail' %}">Моя корзина</a>
+    </p>
+{% endblock %}
