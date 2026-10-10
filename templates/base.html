@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Магазин{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1><a href="{% url 'catalog:product_list' %}">Универсальная база</a></h1>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
